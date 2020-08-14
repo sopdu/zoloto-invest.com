@@ -150,275 +150,50 @@ use \Bitrix\Main\Localization\Loc;
                         <table border="0" width="100%">
                             <tr>
                                 <td width="50%">
-                                    <span class="product-item-price-current" id="<?=$itemIds['PRICE']?>">
-                                        Продажа<br />
-                                        <?#='<pre>'; print_r($price['PRINT_RATIO_PRICE']); '</pre>';?>
+                                    <?if ($actualItem['CAN_BUY']):?>
+                                        <div class="product-item-button-container" id="<?=$itemIds['BASKET_ACTIONS']?>">
+                                            <button class="btn btn-primary <?=$buttonSizeClass?>" id="<?=$itemIds['BUY_LINK']?>" href="javascript:void(0)" rel="nofollow">
+                                                <span class="product-item-price-current" id="<?=$itemIds['PRICE']?>">
+                                                    <span style="font-size: 11px">Продажа</span><br />
                                                     <?
-                                                    if (!empty($price))
-                                                    {
-                                                        if ($arParams['PRODUCT_DISPLAY_MODE'] === 'N' && $haveOffers)
-                                                        {
-                                                            echo Loc::getMessage(
+                                                        if (!empty($price)){
+                                                            if ($arParams['PRODUCT_DISPLAY_MODE'] === 'N' && $haveOffers){
+                                                                echo Loc::getMessage(
                                                                 'CT_BCI_TPL_MESS_PRICE_SIMPLE_MODE',
-                                                                array(
-                                                                    '#PRICE#' => $price['PRINT_RATIO_PRICE'],
-                                                                    '#VALUE#' => $measureRatio,
-                                                                    '#UNIT#' => $minOffer['ITEM_MEASURE']['TITLE']
-                                                                )
-                                                            );
+                                                                    array(
+                                                                        '#PRICE#' => $price['PRINT_RATIO_PRICE'],
+                                                                        '#VALUE#' => $measureRatio,
+                                                                        '#UNIT#' => $minOffer['ITEM_MEASURE']['TITLE']
+                                                                    )
+                                                                );
+                                                            } else {
+                                                                echo $price['PRINT_RATIO_PRICE'];
+                                                            }
                                                         }
-                                                        else
-                                                        {
-                                                            echo $price['PRINT_RATIO_PRICE'];
-                                                        }
-                                                    }
                                                     ?>
-                                                    <?
-                                                    #echo '<pre>'; print_r(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])); '</pre>';
-                                                    ?>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    <?else:?>
+                                    <span class="product-item-price-current" id="<?=$itemIds['PRICE']?>" style="color: var(--theme-b-link-hover)">
+                                        <?=$arParams['MESS_NOT_AVAILABLE']?>
                                     </span>
-
-                                    <?
-                                    if (!$haveOffers)
-                                    {
-                                        if ($actualItem['CAN_BUY'])
-                                        {
-                                            ?>
-                                            <div class="product-item-button-container" id="<?=$itemIds['BASKET_ACTIONS']?>">
-                                                <button class="btn btn-primary <?=$buttonSizeClass?>" id="<?=$itemIds['BUY_LINK']?>"
-                                                        href="javascript:void(0)" rel="nofollow">
-                                                    <?=($arParams['ADD_TO_BASKET_ACTION'] === 'BUY' ? $arParams['MESS_BTN_BUY'] : $arParams['MESS_BTN_ADD_TO_BASKET'])?>
-                                                </button>
-                                            </div>
-                                            <?
-                                        }
-                                        else
-                                        {
-                                            ?>
-                                            <div class="product-item-button-container">
-                                                <?
-                                                if ($showSubscribe)
-                                                {
-                                                    $APPLICATION->IncludeComponent(
-                                                        'bitrix:catalog.product.subscribe',
-                                                        '',
-                                                        array(
-                                                            'PRODUCT_ID' => $actualItem['ID'],
-                                                            'BUTTON_ID' => $itemIds['SUBSCRIBE_LINK'],
-                                                            'BUTTON_CLASS' => 'btn btn-primary '.$buttonSizeClass,
-                                                            'DEFAULT_DISPLAY' => true,
-                                                            'MESS_BTN_SUBSCRIBE' => $arParams['~MESS_BTN_SUBSCRIBE'],
-                                                        ),
-                                                        $component,
-                                                        array('HIDE_ICONS' => 'Y')
-                                                    );
-                                                }
-                                                ?>
-                                                <button class="btn btn-link <?=$buttonSizeClass?>"
-                                                        id="<?=$itemIds['NOT_AVAILABLE_MESS']?>" href="javascript:void(0)" rel="nofollow">
-                                                    <?=$arParams['MESS_NOT_AVAILABLE']?>
-                                                </button>
-                                            </div>
-                                            <?
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if ($arParams['PRODUCT_DISPLAY_MODE'] === 'Y')
-                                        {
-                                            ?>
-                                            <div class="product-item-button-container">
-                                                <?
-                                                if ($showSubscribe)
-                                                {
-                                                    $APPLICATION->IncludeComponent(
-                                                        'bitrix:catalog.product.subscribe',
-                                                        '',
-                                                        array(
-                                                            'PRODUCT_ID' => $item['ID'],
-                                                            'BUTTON_ID' => $itemIds['SUBSCRIBE_LINK'],
-                                                            'BUTTON_CLASS' => 'btn btn-primary '.$buttonSizeClass,
-                                                            'DEFAULT_DISPLAY' => !$actualItem['CAN_BUY'],
-                                                            'MESS_BTN_SUBSCRIBE' => $arParams['~MESS_BTN_SUBSCRIBE'],
-                                                        ),
-                                                        $component,
-                                                        array('HIDE_ICONS' => 'Y')
-                                                    );
-                                                }
-                                                ?>
-                                                <button class="btn btn-link <?=$buttonSizeClass?>"
-                                                        id="<?=$itemIds['NOT_AVAILABLE_MESS']?>" href="javascript:void(0)" rel="nofollow"
-                                                    <?=($actualItem['CAN_BUY'] ? 'style="display: none;"' : '')?>>
-                                                    <?=$arParams['MESS_NOT_AVAILABLE']?>
-                                                </button>
-                                                <div id="<?=$itemIds['BASKET_ACTIONS']?>" <?=($actualItem['CAN_BUY'] ? '' : 'style="display: none;"')?>>
-                                                    <button class="btn btn-primary <?=$buttonSizeClass?>" id="<?=$itemIds['BUY_LINK']?>"
-                                                            href="javascript:void(0)" rel="nofollow">
-                                                        <?=($arParams['ADD_TO_BASKET_ACTION'] === 'BUY' ? $arParams['MESS_BTN_BUY'] : $arParams['MESS_BTN_ADD_TO_BASKET'])?>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <?
-                                        }
-                                        else
-                                        {
-                                            ?>
-                                            <div class="product-item-button-container">
-                                                <button class="btn btn-primary <?=$buttonSizeClass?>" href="<?=$item['DETAIL_PAGE_URL']?>">
-                                                    <?=$arParams['MESS_BTN_DETAIL']?>
-                                                </button>
-                                            </div>
-                                            <?
-                                        }
-                                    }
-                                    ?>
-
+                                    <?endif;?>
                                 </td>
                                 <td width="50%">
-                                    <span class="product-item-price-current">
-							Покупка<br />
-							<?=number_format(round(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_PRICE"]), 0, ' ', ' ')?>
-                                        <?=str_replace('#', '', CCurrencyLang::GetByID(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_CURRENCY"], "ru")["FORMAT_STRING"])?>
-						</span>
+
+                                        <a href="" class="btn btn-primary btn-md">
+                                            <span class="product-item-price-current">
+                                                <span style="font-size: 11px">Покупка</span><br />
+                                            <?=number_format(round(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_PRICE"]), 0, ' ', ' ')?>
+                                            <?=str_replace('#', '', CCurrencyLang::GetByID(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_CURRENCY"], "ru")["FORMAT_STRING"])?>
+                                    </span>
+                                        </a>
+
+
                                 </td>
                             </tr>
                         </table>
-
-
-                        <?/*<div class="product-item-info-container product-item-hidden" data-entity="buttons-block">*/?>
-                            <?
-                            if (!$haveOffers)
-                            {
-                                if ($actualItem['CAN_BUY'])
-                                {
-                                    ?>
-                                    <div class="product-item-button-container" id="<?=$itemIds['BASKET_ACTIONS']?>">
-                                        <button class="btn btn-primary <?=$buttonSizeClass?>" id="<?=$itemIds['BUY_LINK']?>"
-                                                href="javascript:void(0)" rel="nofollow">
-                                            <?=($arParams['ADD_TO_BASKET_ACTION'] === 'BUY' ? $arParams['MESS_BTN_BUY'] : $arParams['MESS_BTN_ADD_TO_BASKET'])?>
-                                        </button>
-                                    </div>
-                                    <?
-                                }
-                                else
-                                {
-                                    ?>
-                                    <div class="product-item-button-container">
-                                        <?
-                                        if ($showSubscribe)
-                                        {
-                                            $APPLICATION->IncludeComponent(
-                                                'bitrix:catalog.product.subscribe',
-                                                '',
-                                                array(
-                                                    'PRODUCT_ID' => $actualItem['ID'],
-                                                    'BUTTON_ID' => $itemIds['SUBSCRIBE_LINK'],
-                                                    'BUTTON_CLASS' => 'btn btn-primary '.$buttonSizeClass,
-                                                    'DEFAULT_DISPLAY' => true,
-                                                    'MESS_BTN_SUBSCRIBE' => $arParams['~MESS_BTN_SUBSCRIBE'],
-                                                ),
-                                                $component,
-                                                array('HIDE_ICONS' => 'Y')
-                                            );
-                                        }
-                                        ?>
-                                        <button class="btn btn-link <?=$buttonSizeClass?>"
-                                                id="<?=$itemIds['NOT_AVAILABLE_MESS']?>" href="javascript:void(0)" rel="nofollow">
-                                            <?=$arParams['MESS_NOT_AVAILABLE']?>
-                                        </button>
-                                    </div>
-                                    <?
-                                }
-                            }
-                            else
-                            {
-                                if ($arParams['PRODUCT_DISPLAY_MODE'] === 'Y')
-                                {
-                                    ?>
-                                    <div class="product-item-button-container">
-                                        <?
-                                        if ($showSubscribe)
-                                        {
-                                            $APPLICATION->IncludeComponent(
-                                                'bitrix:catalog.product.subscribe',
-                                                '',
-                                                array(
-                                                    'PRODUCT_ID' => $item['ID'],
-                                                    'BUTTON_ID' => $itemIds['SUBSCRIBE_LINK'],
-                                                    'BUTTON_CLASS' => 'btn btn-primary '.$buttonSizeClass,
-                                                    'DEFAULT_DISPLAY' => !$actualItem['CAN_BUY'],
-                                                    'MESS_BTN_SUBSCRIBE' => $arParams['~MESS_BTN_SUBSCRIBE'],
-                                                ),
-                                                $component,
-                                                array('HIDE_ICONS' => 'Y')
-                                            );
-                                        }
-                                        ?>
-                                        <button class="btn btn-link <?=$buttonSizeClass?>"
-                                                id="<?=$itemIds['NOT_AVAILABLE_MESS']?>" href="javascript:void(0)" rel="nofollow"
-                                            <?=($actualItem['CAN_BUY'] ? 'style="display: none;"' : '')?>>
-                                            <?=$arParams['MESS_NOT_AVAILABLE']?>
-                                        </button>
-                                        <div id="<?=$itemIds['BASKET_ACTIONS']?>" <?=($actualItem['CAN_BUY'] ? '' : 'style="display: none;"')?>>
-                                            <button class="btn btn-primary <?=$buttonSizeClass?>" id="<?=$itemIds['BUY_LINK']?>"
-                                                    href="javascript:void(0)" rel="nofollow">
-                                                <?=($arParams['ADD_TO_BASKET_ACTION'] === 'BUY' ? $arParams['MESS_BTN_BUY'] : $arParams['MESS_BTN_ADD_TO_BASKET'])?>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <?
-                                }
-                                else
-                                {
-                                    ?>
-                                    <div class="product-item-button-container">
-                                        <button class="btn btn-primary <?=$buttonSizeClass?>" href="<?=$item['DETAIL_PAGE_URL']?>">
-                                            <?=$arParams['MESS_BTN_DETAIL']?>
-                                        </button>
-                                    </div>
-                                    <?
-                                }
-                            }
-                            ?>
-                        <?/*</div>*/?>
-
-
-
-                        <?/*
-						<span class="product-item-price-current" id="<?=$itemIds['PRICE']?>">
-                            Продажа
-                            <?#='<pre>'; print_r($price['PRINT_RATIO_PRICE']); '</pre>';?>
-							<?
-							if (!empty($price))
-							{
-								if ($arParams['PRODUCT_DISPLAY_MODE'] === 'N' && $haveOffers)
-								{
-									echo Loc::getMessage(
-										'CT_BCI_TPL_MESS_PRICE_SIMPLE_MODE',
-										array(
-											'#PRICE#' => $price['PRINT_RATIO_PRICE'],
-											'#VALUE#' => $measureRatio,
-											'#UNIT#' => $minOffer['ITEM_MEASURE']['TITLE']
-										)
-									);
-								}
-								else
-								{
-									echo $price['PRINT_RATIO_PRICE'];
-								}
-							}
-							?>
-							<?
-								#echo '<pre>'; print_r(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])); '</pre>';
-							?>
-						</span>
-						<span class="product-item-price-current">
-							Покупка
-							<?=number_format(round(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_PRICE"]), 0, ' ', ' ')?>
-							<?=str_replace('#', '', CCurrencyLang::GetByID(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_CURRENCY"], "ru")["FORMAT_STRING"])?>
-						</span>
-
-                        */?>
 					</div>
 					<?
 					break;

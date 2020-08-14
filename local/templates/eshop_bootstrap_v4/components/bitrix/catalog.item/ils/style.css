@@ -498,7 +498,7 @@
 }
 
 .product-item-price-current {
-	color: #3f3f3f;
+	/*color: #3f3f3f;*/
 	white-space: nowrap;
 	font-weight: bold;
 	font-size: 13px;
