@@ -118,7 +118,16 @@ $curPage = $APPLICATION->GetCurPage(true);
 				</div>
 			</div>
 			<!--endregion-->
-
+            <?$APPLICATION->IncludeComponent("sopdu:curse", "curse_in_header", Array(
+                "COMPONENT_TEMPLATE" => ".default",
+                "ChoiceCurrency" => array(	// Отображаемая валюта
+                    0 => "USD",
+                    1 => "EUR",
+                ),
+                "ChoicePercent" => "",	// Сколько процентов прибавить целое число)
+            ),
+                false
+            );?>
 			<!--region menu-->
 			<div class="row mb-4 d-none d-md-block">
 				<div class="col">
@@ -208,7 +217,6 @@ $curPage = $APPLICATION->GetCurPage(true);
 			<!--endregion-->
 		</div>
 	</header>
-
 	<div class="workarea">
 		<div class="container bx-content-section">
 			<div class="row">
