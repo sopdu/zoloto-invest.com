@@ -1,1 +1,13 @@
 bitrix
+.idea/.gitignore
+.idea/bitrixlangplugin.xml
+.idea/dataSources.xml
+.idea/deployment.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/zoloto-invest.com.iml
+index.html
+local/templates/eshop_bootstrap_v4/components/sopdu/
+upload/
+yandex_8904eeac632d831a.html
