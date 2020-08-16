@@ -126,7 +126,27 @@ use \Bitrix\Main\Localization\Loc;
 		</a>
 	<? endif; ?>
 	</h3>
-    ввв
+
+	<div class="product-item-info-container product-item-hidden" data-entity="props-block">
+								<dl class="product-item-properties">
+									<?
+									foreach ($item['DISPLAY_PROPERTIES'] as $code => $displayProperty)
+									{
+										?>
+										<dt class="text-muted<?=(!isset($item['PROPERTY_CODE_MOBILE'][$code]) ? ' d-none d-sm-block' : '')?>">
+											<?=$displayProperty['NAME']?>
+										</dt>
+										<dd class="text-dark<?=(!isset($item['PROPERTY_CODE_MOBILE'][$code]) ? ' d-none d-sm-block' : '')?>" >
+											<?=(is_array($displayProperty['DISPLAY_VALUE'])
+												? implode(' / ', $displayProperty['DISPLAY_VALUE'])
+												: $displayProperty['DISPLAY_VALUE'])?>
+										</dd>
+										<?
+									}
+									?>
+								</dl>
+							</div>
+  
 	<?
 	if (!empty($arParams['PRODUCT_BLOCKS_ORDER']))
 	{
@@ -189,7 +209,13 @@ use \Bitrix\Main\Localization\Loc;
                                             <?=str_replace('#', '', CCurrencyLang::GetByID(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_CURRENCY"], "ru")["FORMAT_STRING"])?>
                                     </span>
                                         </a>
-
+										   <a href="../vykup-monet/index.php" class="btn btn-primary btn-md">
+                                            <span class="product-item-price-current">
+                                                <span style="font-size: 11px">Выкуп</span><br />
+                                            <?=number_format(round(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_PRICE"]), 0, ' ', ' ')?>
+                                            <?=str_replace('#', '', CCurrencyLang::GetByID(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_CURRENCY"], "ru")["FORMAT_STRING"])?>
+                                    </span>
+                                        </a>
 
                                 </td>
                             </tr>
@@ -318,12 +344,12 @@ use \Bitrix\Main\Localization\Loc;
 							if ($actualItem['CAN_BUY'])
 							{
 								?>
-								<div class="product-item-button-container" id="<?=$itemIds['BASKET_ACTIONS']?>">
+								<!-- <div class="product-item-button-container" id="<?=$itemIds['BASKET_ACTIONS']?>">
 									<button class="btn btn-primary <?=$buttonSizeClass?>" id="<?=$itemIds['BUY_LINK']?>"
 											href="javascript:void(0)" rel="nofollow">
 										<?=($arParams['ADD_TO_BASKET_ACTION'] === 'BUY' ? $arParams['MESS_BTN_BUY'] : $arParams['MESS_BTN_ADD_TO_BASKET'])?>
 									</button>
-								</div>
+								</div> -->
 								<?
 							}
 							else
@@ -416,7 +442,7 @@ use \Bitrix\Main\Localization\Loc;
 						if (!empty($item['DISPLAY_PROPERTIES']))
 						{
 							?>
-							<div class="product-item-info-container product-item-hidden" data-entity="props-block">
+							<!-- <div class="product-item-info-container product-item-hidden" data-entity="props-block">
 								<dl class="product-item-properties">
 									<?
 									foreach ($item['DISPLAY_PROPERTIES'] as $code => $displayProperty)
@@ -434,7 +460,7 @@ use \Bitrix\Main\Localization\Loc;
 									}
 									?>
 								</dl>
-							</div>
+							</div> -->
 							<?
 						}
 
