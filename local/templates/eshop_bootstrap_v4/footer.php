@@ -2,6 +2,7 @@
 				</div><!--end .bx-content -->
 
 				<!-- region Sidebar -->
+<?php/*
 				<?if (!$needSidebar):?>
 					<div class="sidebar col-md-3 col-sm-4">
 						<?$APPLICATION->IncludeComponent(
@@ -18,10 +19,11 @@
 						);?>
 					</div>
 				<?endif?>
+*/?>
 				<!--endregion -->
 
 			</div><!--end row-->
-			<?$APPLICATION->IncludeComponent(
+			11<?$APPLICATION->IncludeComponent(
 				"bitrix:main.include",
 				"",
 				Array(
