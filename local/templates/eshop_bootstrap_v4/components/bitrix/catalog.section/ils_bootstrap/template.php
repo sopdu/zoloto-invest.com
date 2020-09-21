@@ -155,7 +155,7 @@ $containerName = 'container-'.$navParams['NavNum'];
 $themeClass = isset($arParams['TEMPLATE_THEME']) ? ' bx-'.$arParams['TEMPLATE_THEME'] : '';
 
 ?>
-
+<?#='<pre>'; print_r($themeClass); '</pre>';?>
 <div class="row<?=$themeClass?>"> <? // wrapper ?>
 	<div class="col">
 	<?
@@ -187,7 +187,8 @@ $themeClass = isset($arParams['TEMPLATE_THEME']) ? ' bx-'.$arParams['TEMPLATE_TH
 	}
 	//endregion
 	?>
-		<div class="mb-4 catalog-section" data-entity="<?=$containerName?>">
+		<?/*<div class="mb-4 catalog-section" data-entity="<?=$containerName?>">*/?>
+		<div class="mb-3 catalog-section" data-entity="<?=$containerName?>">
 			<!-- items-container -->
 			<?
 			if (!empty($arResult['ITEMS']) && !empty($arResult['ITEM_ROWS']))

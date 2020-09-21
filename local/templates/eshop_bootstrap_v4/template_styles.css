@@ -69,15 +69,19 @@
 
 .bx-green,
 .bx-theme-green {
-	--primary: #63aa28;
-	--theme-color-primary: #63aa28;
+	/*--primary: #63aa28;
+	--theme-color-primary: #63aa28;*/
+	--primary: #056625;
+	--theme-color-primary: #056625;
 	--theme-color-second: #5b9f0b;
 	--theme-color-light: #a8d95b;
 	--theme-b-link: #44b1c9;
 	--theme-b-link-hover: #5cc3d1;
 	--theme-b-tx-primary: #fff;
-	--theme-b-bg-primary: #63aa28;
-	--theme-b-bd-primary: #63aa28;
+	/*--theme-b-bg-primary: #63aa28;
+	--theme-b-bd-primary: #63aa28;*/
+	--theme-b-bg-primary: #056625;
+	--theme-b-bd-primary: #056625;
 	--theme-b-sd-primary: rgba(99, 170, 40, 0.5);
 	--theme-b-tx-primary-hover: #fff;
 	--theme-b-bg-primary-hover: #5b9f0b;
@@ -105,7 +109,7 @@ h1,h2,h3,h4,h5 {
 
 .bx-content-section,
 .bx-header-section {
-	padding-bottom: 2px;
+	padding-bottom: 0px;
 	background-color: rgba(255, 255, 255, .95);
 }
 
@@ -125,7 +129,7 @@ h1,h2,h3,h4,h5 {
 /*region Logo*/
 .bx-logo-block {
 	display: block;
-	height: 50px;
+	height: auto;
 	border-bottom: none;
 }
 

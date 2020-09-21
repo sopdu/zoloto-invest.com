@@ -1,8 +1,15 @@
 <?
 $aMenuLinks = Array(
 	Array(
-		"Выкуп монет", 
-		"/vykup-monet/index.php", 
+		"Каталог", 
+		"/catalog/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Выкуп", 
+		"/vykup-monet/", 
 		Array(), 
 		Array(), 
 		"" 
@@ -10,6 +17,34 @@ $aMenuLinks = Array(
 	Array(
 		"Спецпредложения", 
 		"/spetspredlozheniya/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Котировки", 
+		"/kotorovki/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Купить/Продать", 
+		"/kupit-prodat/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"О монетах", 
+		"/o-monetakh/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"О нас", 
+		"/o-nas/", 
 		Array(), 
 		Array(), 
 		"" 

@@ -2,32 +2,35 @@
 <?if ($APPLICATION->GetCurPage(true) == SITE_DIR."index.php"):?>
 <div class="mb-5">
 	<?$APPLICATION->IncludeComponent("bitrix:search.title", "bootstrap_v4", array(
-			"NUM_CATEGORIES" => "1",
-			"TOP_COUNT" => "5",
-			"CHECK_DATES" => "N",
-			"SHOW_OTHERS" => "N",
-			"PAGE" => SITE_DIR."catalog/",
-			"CATEGORY_0_TITLE" => "Товары" ,
-			"CATEGORY_0" => array(
-				0 => "iblock_catalog",
-			),
-			"CATEGORY_0_iblock_catalog" => array(
-				0 => "all",
-			),
-			"CATEGORY_OTHERS_TITLE" => "Прочее",
-			"SHOW_INPUT" => "Y",
-			"INPUT_ID" => "title-search-input",
-			"CONTAINER_ID" => "search",
-			"PRICE_CODE" => array(
-				0 => "BASE",
-			),
-			"SHOW_PREVIEW" => "Y",
-			"PREVIEW_WIDTH" => "75",
-			"PREVIEW_HEIGHT" => "75",
-			"CONVERT_CURRENCY" => "Y"
+	"NUM_CATEGORIES" => "1",
+		"TOP_COUNT" => "5",
+		"CHECK_DATES" => "N",
+		"SHOW_OTHERS" => "N",
+		"PAGE" => SITE_DIR."catalog/",
+		"CATEGORY_0_TITLE" => "Товары",
+		"CATEGORY_0" => array(
+			0 => "iblock_catalog",
 		),
-		false
-	);?>
+		"CATEGORY_0_iblock_catalog" => array(
+			0 => "all",
+		),
+		"CATEGORY_OTHERS_TITLE" => "Прочее",
+		"SHOW_INPUT" => "Y",
+		"INPUT_ID" => "title-search-input",
+		"CONTAINER_ID" => "search",
+		"PRICE_CODE" => array(
+			0 => "BASE",
+		),
+		"SHOW_PREVIEW" => "Y",
+		"PREVIEW_WIDTH" => "75",
+		"PREVIEW_HEIGHT" => "75",
+		"CONVERT_CURRENCY" => "Y"
+	),
+	false,
+	array(
+	"ACTIVE_COMPONENT" => "Y"
+	)
+);?>
 </div>
 <?endif?>
 
@@ -78,18 +81,18 @@
 </div>
 
 <div class="mb-5">
-	<?$APPLICATION->IncludeComponent(
-		"bitrix:main.include",
-		"",
-		Array(
-			"AREA_FILE_SHOW" => "file",
-			"PATH" => SITE_DIR."include/twitter.php",
-			"AREA_FILE_RECURSIVE" => "N",
-			"EDIT_MODE" => "html",
-		),
-		false,
-		Array('HIDE_ICONS' => 'N')
-	);?>
+	<?$APPLICATION->IncludeComponent("bitrix:main.include", "", array(
+	"AREA_FILE_SHOW" => "file",
+		"PATH" => SITE_DIR."include/twitter.php",
+		"AREA_FILE_RECURSIVE" => "N",
+		"EDIT_MODE" => "html"
+	),
+	false,
+	array(
+	"HIDE_ICONS" => "N",
+		"ACTIVE_COMPONENT" => "N"
+	)
+);?>
 </div>
 
 <div class="mb-5">

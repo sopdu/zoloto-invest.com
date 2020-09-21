@@ -22,6 +22,10 @@ use \Bitrix\Main\Localization\Loc;
  * @var CatalogSectionComponent $component
  */
 ?>
+<?
+$myPrice = new myPrice();
+$myPrice->main($arResult["ITEM"]["ID"], "RUB");
+?>
 <?#='<pre>'; print_r($productTitle); '</pre>';?>
 <?#='<pre>'; print_r($arResult); '</pre>';?>
 <div class="product-item">
@@ -33,14 +37,15 @@ use \Bitrix\Main\Localization\Loc;
 	<? endif; ?>
 		<span class="product-item-image-slider-slide-container slide" id="<?=$itemIds['PICT_SLIDER']?>"
 			<?=($showSlider ? '' : 'style="display: none;"')?>
-			data-slider-interval="<?=$arParams['SLIDER_INTERVAL']?>" data-slider-wrap="true">
+			>
+			<!-- data-slider-interval="<?//=$arParams['SLIDER_INTERVAL']?>" data-slider-wrap="true" -->
 			<?
 			if ($showSlider)
 			{
 				foreach ($morePhoto as $key => $photo)
 				{
 					?>
-					<span class="product-item-image-slide item <?=($key == 0 ? 'active' : '')?>" style="background-image: url('<?=$photo['SRC']?>');"></span>
+					<span class="product-item-image-slide item <?=($key == 0 ? 'active product-img-1' : '')?> <?=($key == 1 ? 'active product-img-2' : '')?>" style="background-image: url('<?=$photo['SRC']?>');"></span>
 					<?
 				}
 			}
@@ -87,27 +92,27 @@ use \Bitrix\Main\Localization\Loc;
 			<?
 		}
 		?>
-		<span class="product-item-image-slider-control-container" id="<?=$itemIds['PICT_SLIDER']?>_indicator"
-			<?=($showSlider ? '' : 'style="display: none;"')?>>
+		<!-- <span class="product-item-image-slider-control-container" id="<?//=$itemIds['PICT_SLIDER']?>_indicator"
+			<?//=($showSlider ? '' : 'style="display: none;"')?>>
 			<?
-			if ($showSlider)
+			//if ($showSlider)
 			{
-				foreach ($morePhoto as $key => $photo)
+				//foreach ($morePhoto as $key => $photo)
 				{
 					?>
-					<span class="product-item-image-slider-control<?=($key == 0 ? ' active' : '')?>" data-go-to="<?=$key?>"></span>
+					<span class="product-item-image-slider-control<?//=($key == 0 ? ' active' : '')?>" data-go-to="<?=$key?>"></span>
 					<?
 				}
 			}
 			?>
-		</span>
+		</span> -->
 		<?
-		if ($arParams['SLIDER_PROGRESS'] === 'Y')
+		//if ($arParams['SLIDER_PROGRESS'] === 'Y')
 		{
 			?>
-			<span class="product-item-image-slider-progress-bar-container">
-				<span class="product-item-image-slider-progress-bar" id="<?=$itemIds['PICT_SLIDER']?>_progress_bar" style="width: 0;"></span>
-			</span>
+			<!-- <span class="product-item-image-slider-progress-bar-container">
+				<span class="product-item-image-slider-progress-bar" id="<?//=$itemIds['PICT_SLIDER']?>_progress_bar" style="width: 0;"></span>
+			</span> -->
 			<?
 		}
 		?>
@@ -127,6 +132,41 @@ use \Bitrix\Main\Localization\Loc;
 	<? endif; ?>
 	</h3>
 
+
+    <div class="product-item-info-container" data-entity="props-block">
+        <dl class="product-item-properties">
+
+    <?
+									foreach ($item['DISPLAY_PROPERTIES'] as $code => $displayProperty)
+									{
+										?>
+
+                                            <dt class="text-muted<?=(!isset($item['PROPERTY_CODE_MOBILE'][$code]) ? ' d-none d-sm-block' : '')?>">
+                                                <?=$displayProperty['NAME']?>
+                                            </dt>
+                                            <dd class="text-dark<?=(!isset($item['PROPERTY_CODE_MOBILE'][$code]) ? ' d-none d-sm-block' : '')?>">
+                                                <?=(is_array($displayProperty['DISPLAY_VALUE'])
+                                                    ? implode(' / ', $displayProperty['DISPLAY_VALUE'])
+                                                    : $displayProperty['DISPLAY_VALUE'])?>
+                                            </dd>
+                                        <?if(empty($displayProperty['DISPLAY_VALUE'])):?>
+                                            <dt class="text-muted<?=(!isset($item['PROPERTY_CODE_MOBILE'][$code]) ? ' d-none d-sm-block' : '')?>">
+                                                &ensp;1
+                                            </dt>
+                                            <dd class="text-dark<?=(!isset($item['PROPERTY_CODE_MOBILE'][$code]) ? ' d-none d-sm-block' : '')?>">
+                                                &ensp;1
+                                            </dd>
+                                        <?endif;?>
+										<?
+									}
+?>
+        </dl>
+    </div>
+
+
+
+
+<?/*
 	<div class="product-item-info-container product-item-hidden" data-entity="props-block">
 								<dl class="product-item-properties">
 									<?
@@ -146,7 +186,7 @@ use \Bitrix\Main\Localization\Loc;
 									?>
 								</dl>
 							</div>
-  
+  */?>
 	<?
 	if (!empty($arParams['PRODUCT_BLOCKS_ORDER']))
 	{
@@ -172,10 +212,9 @@ use \Bitrix\Main\Localization\Loc;
                                 <td width="50%">
                                     <?if ($actualItem['CAN_BUY']):?>
                                         <div class="product-item-button-container" id="<?=$itemIds['BASKET_ACTIONS']?>">
-                                            <button class="btn btn-primary <?=$buttonSizeClass?>" id="<?=$itemIds['BUY_LINK']?>" href="javascript:void(0)" rel="nofollow">
-                                                <span class="product-item-price-current" id="<?=$itemIds['PRICE']?>">
-                                                    <span style="font-size: 11px">Продажа</span><br />
-                                                    <?
+                                            <?/*<button class="btn btn-primary <?=$buttonSizeClass?>" id="<?=$itemIds['BUY_LINK']?>" href="javascript:void(0)" rel="nofollow" style="width: 100%">*/?>
+                                            <span class="green product-item-price-current" id="<?=$itemIds['PRICE']?>">
+                                            	<?
                                                         if (!empty($price)){
                                                             if ($arParams['PRODUCT_DISPLAY_MODE'] === 'N' && $haveOffers){
                                                                 echo Loc::getMessage(
@@ -191,7 +230,11 @@ use \Bitrix\Main\Localization\Loc;
                                                             }
                                                         }
                                                     ?>
-                                                </span>
+                                            </span>
+                                            <button class="green-bg btn btn-primary btn-md" id="<?=$itemIds['BUY_LINK']?>" href="javascript:void(0)" rel="nofollow" style="width: 100%">
+                                                    <span style="font-size: 11px">Купить</span><br />
+                                                    
+                                                
                                             </button>
                                         </div>
                                     <?else:?>
@@ -201,20 +244,21 @@ use \Bitrix\Main\Localization\Loc;
                                     <?endif;?>
                                 </td>
                                 <td width="50%">
-
+                                        <?/*
                                         <a href="" class="btn btn-primary btn-md">
                                             <span class="product-item-price-current">
                                                 <span style="font-size: 11px">Покупка</span><br />
                                             <?=number_format(round(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_PRICE"]), 0, ' ', ' ')?>
                                             <?=str_replace('#', '', CCurrencyLang::GetByID(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_CURRENCY"], "ru")["FORMAT_STRING"])?>
                                     </span>
-                                        </a>
-										   <a href="../vykup-monet/index.php" class="btn btn-primary btn-md">
-                                            <span class="product-item-price-current">
-                                                <span style="font-size: 11px">Выкуп</span><br />
-                                            <?=number_format(round(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_PRICE"]), 0, ' ', ' ')?>
-                                            <?=str_replace('#', '', CCurrencyLang::GetByID(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_CURRENCY"], "ru")["FORMAT_STRING"])?>
-                                    </span>
+*/?>
+									<span class="product-item-price-current red"><?=number_format(round(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_PRICE"]), 0, ' ', ' ')?>
+                                            <?=str_replace('#', '', CCurrencyLang::GetByID(CCatalogProduct::GetByID($arResult["ITEM"]['ID'])["PURCHASING_CURRENCY"], "ru")["FORMAT_STRING"])?></span>
+										   <a href="../vykup-monet/index.php?itemID=<?=$arResult["ITEM"]['ID']?>" class="btn btn-primary btn-md red-bg" style="width: 100%">
+                                           
+                                                <span style="font-size: 11px">Продать</span><br />
+                                            
+ 
                                         </a>
 
                                 </td>
@@ -341,6 +385,7 @@ use \Bitrix\Main\Localization\Loc;
 						<?
 						if (!$haveOffers)
 						{
+						    /*
 							if ($actualItem['CAN_BUY'])
 							{
 								?>
@@ -381,6 +426,7 @@ use \Bitrix\Main\Localization\Loc;
 								</div>
 								<?
 							}
+						    */
 						}
 						else
 						{
@@ -422,13 +468,13 @@ use \Bitrix\Main\Localization\Loc;
 							}
 							else
 							{
-								?>
+								/*?>
 								<div class="product-item-button-container">
 									<button class="btn btn-primary <?=$buttonSizeClass?>" href="<?=$item['DETAIL_PAGE_URL']?>">
 										<?=$arParams['MESS_BTN_DETAIL']?>
 									</button>
 								</div>
-								<?
+								<?*/
 							}
 						}
 						?>
@@ -444,7 +490,7 @@ use \Bitrix\Main\Localization\Loc;
 							?>
 							<!-- <div class="product-item-info-container product-item-hidden" data-entity="props-block">
 								<dl class="product-item-properties">
-									<?
+									<?/*
 									foreach ($item['DISPLAY_PROPERTIES'] as $code => $displayProperty)
 									{
 										?>
@@ -458,7 +504,7 @@ use \Bitrix\Main\Localization\Loc;
 										</dd>
 										<?
 									}
-									?>
+									*/?>
 								</dl>
 							</div> -->
 							<?
@@ -550,7 +596,7 @@ use \Bitrix\Main\Localization\Loc;
 
 						if ($showProductProps || $showOfferProps)
 						{
-							?>
+							/*?>
 							<div class="product-item-info-container product-item-hidden" data-entity="props-block">
 								<dl class="product-item-properties">
 									<?
@@ -580,7 +626,7 @@ use \Bitrix\Main\Localization\Loc;
 									?>
 								</dl>
 							</div>
-							<?
+							<?*/
 						}
 					}
 
@@ -589,7 +635,7 @@ use \Bitrix\Main\Localization\Loc;
 				case 'sku':
 					if ($arParams['PRODUCT_DISPLAY_MODE'] === 'Y' && $haveOffers && !empty($item['OFFERS_PROP']))
 					{
-						?>
+						/*?>
 						<div class="product-item-info-container product-item-hidden" id="<?=$itemIds['PROP_DIV']?>">
 							<?
 							foreach ($arParams['SKU_PROPS'] as $skuProperty)
@@ -645,7 +691,7 @@ use \Bitrix\Main\Localization\Loc;
 							}
 							?>
 						</div>
-						<?
+						<?*/
 						foreach ($arParams['SKU_PROPS'] as $skuProperty)
 						{
 							if (!isset($item['OFFERS_PROP'][$skuProperty['CODE']]))

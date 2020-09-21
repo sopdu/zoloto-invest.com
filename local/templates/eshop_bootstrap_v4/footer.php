@@ -23,7 +23,7 @@
 				<!--endregion -->
 
 			</div><!--end row-->
-			11<?$APPLICATION->IncludeComponent(
+			<?$APPLICATION->IncludeComponent(
 				"bitrix:main.include",
 				"",
 				Array(
@@ -159,6 +159,7 @@
 								);?>
 							</span>
 						</div>
+						<div class="mb-3 text-white">г. Москва, ул. 2-я Хуторская, д. 38</div>
 						<div class="mb-3 text-white">
 							<? $APPLICATION->IncludeComponent(
 								"bitrix:main.include",
@@ -242,5 +243,15 @@
 		})
 	});
 </script>
+
+<script type="text/javascript" src="<?= SITE_TEMPLATE_PATH ?>/src/owl.carousel.min.js"></script>
+<script type="text/javascript">
+	$('.header-slider').owlCarousel({
+		items: 1,
+		autoplay: true,
+		loop: true
+	});
+</script>
+
 </body>
 </html>

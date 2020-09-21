@@ -33,7 +33,7 @@ $APPLICATION->SetTitle("Интернет-магазин \"Одежда\"");
 global $trendFilter;
 $trendFilter = array('PROPERTY_TREND' => '#TREND_PROPERTY_VALUE_ID#');
 ?>
-<h2>Тренды сезона</h2>
+<h2>Интересные монеты</h2>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.section", 
 	"ils_bootstrap", 
@@ -44,7 +44,7 @@ $trendFilter = array('PROPERTY_TREND' => '#TREND_PROPERTY_VALUE_ID#');
 		"COMPONENT_TEMPLATE" => "ils_bootstrap",
 		"IBLOCK_TYPE" => "catalog",
 		"SECTION_ID" => $_REQUEST["SECTION_ID"],
-		"SECTION_CODE" => "",
+		"SECTION_CODE" => $_REQUEST["SECTION_CODE"],
 		"SECTION_USER_FIELDS" => array(
 			0 => "",
 			1 => "",
@@ -57,7 +57,7 @@ $trendFilter = array('PROPERTY_TREND' => '#TREND_PROPERTY_VALUE_ID#');
 		"INCLUDE_SUBSECTIONS" => "Y",
 		"SHOW_ALL_WO_SECTION" => "Y",
 		"HIDE_NOT_AVAILABLE" => "N",
-		"PAGE_ELEMENT_COUNT" => "12",
+		"PAGE_ELEMENT_COUNT" => "16",
 		"LINE_ELEMENT_COUNT" => "3",
 		"PROPERTY_CODE" => array(
 			0 => "NEWPRODUCT",
@@ -97,10 +97,10 @@ $trendFilter = array('PROPERTY_TREND' => '#TREND_PROPERTY_VALUE_ID#');
 		"MESS_BTN_SUBSCRIBE" => "Подписаться",
 		"MESS_BTN_DETAIL" => "Подробнее",
 		"MESS_NOT_AVAILABLE" => "Нет в наличии",
-		"SECTION_URL" => "",
-		"DETAIL_URL" => "",
+		"SECTION_URL" => "#SITE_DIR#/catalog/#SECTION_CODE#",
+		"DETAIL_URL" => "#SITE_DIR#/catalog/#SECTION_CODE#/#ELEMENT_CODE#/",
 		"SECTION_ID_VARIABLE" => "SECTION_ID",
-		"SEF_MODE" => "N",
+		"SEF_MODE" => "Y",
 		"AJAX_MODE" => "N",
 		"AJAX_OPTION_JUMP" => "N",
 		"AJAX_OPTION_STYLE" => "Y",
@@ -157,7 +157,7 @@ $trendFilter = array('PROPERTY_TREND' => '#TREND_PROPERTY_VALUE_ID#');
 		"CUSTOM_FILTER" => "{\"CLASS_ID\":\"CondGroup\",\"DATA\":{\"All\":\"AND\",\"True\":\"True\"},\"CHILDREN\":[]}",
 		"HIDE_NOT_AVAILABLE_OFFERS" => "N",
 		"BACKGROUND_IMAGE" => "-",
-		"PRODUCT_ROW_VARIANTS" => "[{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false}]",
+		"PRODUCT_ROW_VARIANTS" => "[{'VARIANT':'3','BIG_DATA':false},{'VARIANT':'3','BIG_DATA':false},{'VARIANT':'3','BIG_DATA':false},{'VARIANT':'3','BIG_DATA':false}]",
 		"ENLARGE_PRODUCT" => "STRICT",
 		"PRODUCT_BLOCKS_ORDER" => "price,props,sku,quantityLimit,quantity,buttons",
 		"SHOW_SLIDER" => "Y",
@@ -175,7 +175,9 @@ $trendFilter = array('PROPERTY_TREND' => '#TREND_PROPERTY_VALUE_ID#');
 		"LOAD_ON_SCROLL" => "N",
 		"DISABLE_INIT_JS_IN_COMPONENT" => "N",
 		"PROPERTY_CODE_MOBILE" => array(
-		)
+		),
+		"SEF_RULE" => "",
+		"SECTION_CODE_PATH" => ""
 	),
 	false
 );?>

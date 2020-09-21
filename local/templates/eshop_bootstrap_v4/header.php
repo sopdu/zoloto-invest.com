@@ -20,9 +20,13 @@ $curPage = $APPLICATION->GetCurPage(true);
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
 	<link rel="shortcut icon" type="image/x-icon" href="<?=SITE_DIR?>favicon.ico" />
+	<link rel="stylesheet" href="<?= SITE_TEMPLATE_PATH ?>/src/owl.carousel.min.css">
 	<? $APPLICATION->ShowHead(); ?>
 </head>
 <body class="bx-background-image bx-theme-<?=$theme?>" <?$APPLICATION->ShowProperty("backgroundImage");?>>
+<style>
+   /* #bx-soa-region {display: none}*/
+</style>
 <div id="panel"><? $APPLICATION->ShowPanel(); ?></div>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:eshop.banner",
@@ -31,21 +35,13 @@ $curPage = $APPLICATION->GetCurPage(true);
 );?>
 <div class="bx-wrapper" id="bx_eshop_wrap">
 	<header class="bx-header">
-		<div class="bx-header-section container">
+
+		<div class="bx-header-section">
 			<!--region bx-header-->
-			<div class="row pt-0 pt-md-3 mb-3 align-items-center" style="position: relative;">
+			<div class="pt-0 pt-md-3 mb-3 align-items-center" style="position: relative;">
 				<div class="d-block d-md-none bx-menu-button-mobile" data-role='bx-menu-button-mobile-position'></div>
 				<div class="col-12 col-md-auto bx-header-logo">
-					<a class="bx-logo-block d-none d-md-block" href="<?=SITE_DIR?>">
-						<?$APPLICATION->IncludeComponent(
-							"bitrix:main.include",
-							"",
-							array(
-								"AREA_FILE_SHOW" => "file",
-								"PATH" => SITE_DIR."include/company_logo.php"),
-							false
-						);?>
-					</a>
+					
 					<a class="bx-logo-block d-block d-md-none text-center" href="<?=SITE_DIR?>">
 						<?$APPLICATION->IncludeComponent(
 							"bitrix:main.include",
@@ -59,77 +55,49 @@ $curPage = $APPLICATION->GetCurPage(true);
 					</a>
 				</div>
 
-				<div class="col-auto d-none d-md-block bx-header-personal">
-					<?$APPLICATION->IncludeComponent(
-						"bitrix:sale.basket.basket.line",
-						"bootstrap_v4",
-						array(
-							"PATH_TO_BASKET" => SITE_DIR."personal/cart/",
-							"PATH_TO_PERSONAL" => SITE_DIR."personal/",
-							"SHOW_PERSONAL_LINK" => "N",
-							"SHOW_NUM_PRODUCTS" => "Y",
-							"SHOW_TOTAL_PRICE" => "Y",
-							"SHOW_PRODUCTS" => "N",
-							"POSITION_FIXED" =>"N",
-							"SHOW_AUTHOR" => "Y",
-							"PATH_TO_REGISTER" => SITE_DIR."login/",
-							"PATH_TO_PROFILE" => SITE_DIR."personal/"
-						),
-						false,
-						array()
-					);?>
-				</div>
+				
 
 				<div class="col bx-header-contact">
-					<div class="d-flex align-items-center justify-content-between justify-content-md-center flex-column flex-sm-row flex-md-column flex-lg-row">
-						<div class="p-lg-3 p-1">
-							<div class="bx-header-phone-block">
-								<i class="bx-header-phone-icon"></i>
-								<span class="bx-header-phone-number">
-									<?$APPLICATION->IncludeComponent(
-										"bitrix:main.include",
-										"",
-										array(
-											"AREA_FILE_SHOW" => "file",
-											"PATH" => SITE_DIR."include/telephone.php"
-										),
-										false
-									);?>
-								</span>
-							</div>
+					<div class="container d-flex justify-content-between">
+						<div class="d-flex align-items-center justify-content-center flex-column flex-sm-row flex-md-column flex-lg-row">
+							<?$APPLICATION->IncludeComponent(
+								"sopdu:curse", 
+								"curse_in_header", 
+								array(
+									"COMPONENT_TEMPLATE" => "curse_in_header",
+									"ChoiceCurrency" => array(
+										0 => "USD",
+										1 => "EUR",
+									),
+									"ChoicePercent" => ""
+								),
+								false
+							);?>
 						</div>
-						<div class="p-lg-3 p-1">
-							<div class="bx-header-worktime">
-								<div class="bx-worktime-title"><?=GetMessage('HEADER_WORK_TIME'); ?></div>
-								<div class="bx-worktime-schedule">
-									<?$APPLICATION->IncludeComponent(
-										"bitrix:main.include",
-										"",
-										array(
-											"AREA_FILE_SHOW" => "file",
-											"PATH" => SITE_DIR."include/schedule.php"
-										),
-										false
-									);?>
-								</div>
+
+						<div class="header-contacts">
+							<div class="contact-wrap">
+								<div class="contact-icon time"></div>
+								<span class="contact-text">Время работы: Пн-Вс 10-19</span>
+							</div>
+						
+							<div class="contact-wrap">
+								<div class="contact-icon mail"></div>
+								<a href="mailto:info@zoloto-invest.com" class="contact-link"><span class="contact-text">info@zoloto-invest.com</span></a>
+							</div>
+																			
+							<div class="contact-wrap">
+								<div class="contact-icon call"></div>
+								<a href="tel:74950000000" class="contact-link"><span class="contact-text">8 (495) 000 00 00</span></a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<!--endregion-->
-            <?$APPLICATION->IncludeComponent("sopdu:curse", "curse_in_header", Array(
-                "COMPONENT_TEMPLATE" => ".default",
-                "ChoiceCurrency" => array(	// Отображаемая валюта
-                    0 => "USD",
-                    1 => "EUR",
-                ),
-                "ChoicePercent" => "",	// Сколько процентов прибавить целое число)
-            ),
-                false
-            );?>
+
 			<!--region menu-->
-			<div class="row mb-4 d-none d-md-block">
+			<div class="d-none d-md-block">
 				<div class="col">
 					<?$APPLICATION->IncludeComponent(
 	"bitrix:menu", 
@@ -139,7 +107,7 @@ $curPage = $APPLICATION->GetCurPage(true);
 		"MENU_CACHE_TYPE" => "A",
 		"MENU_CACHE_TIME" => "36000000",
 		"MENU_CACHE_USE_GROUPS" => "Y",
-		"MENU_THEME" => "yellow",
+		"MENU_THEME" => "site",
 		"CACHE_SELECTED_ITEMS" => "N",
 		"MENU_CACHE_GET_VARS" => array(
 		),
@@ -155,9 +123,21 @@ $curPage = $APPLICATION->GetCurPage(true);
 				</div>
 			</div>
 			<!--endregion-->
+            <?if ($curPage == SITE_DIR."index.php"):?>
+            <?$APPLICATION->IncludeComponent(
+                "bitrix:news.list",
+                "slider",
+                Array(
+                    "IBLOCK_ID" => "4",
+                    "IBLOCK_TYPE" => "information",
+                    "PROPERTY_CODE" => array("BUTTON_LINK", "BUTTON_TEXT", ""),
+                )
+            );?>
+            <?endif;?>
 
 			<!--region search.title -->
 			<?if ($curPage != SITE_DIR."index.php"):?>
+                <?/*
 				<div class="row mb-4">
 					<div class="col">
 						<?$APPLICATION->IncludeComponent(
@@ -192,33 +172,43 @@ $curPage = $APPLICATION->GetCurPage(true);
 						);?>
 					</div>
 				</div>
+                */?>
+            <br />
 			<?endif?>
 			<!--endregion-->
 
 			<!--region breadcrumb-->
-			<?if ($curPage != SITE_DIR."index.php"):?>
-				<div class="row mb-4">
-					<div class="col" id="navigation">
-						<?$APPLICATION->IncludeComponent(
-							"bitrix:breadcrumb",
-							"universal",
-							array(
-								"START_FROM" => "0",
-								"PATH" => "",
-								"SITE_ID" => "-"
-							),
-							false,
-							Array('HIDE_ICONS' => 'Y')
-						);?>
-					</div>
-				</div>
-				<h1 id="pagetitle"><?$APPLICATION->ShowTitle(false);?></h1>
-			<?endif?>
+
 			<!--endregion-->
 		</div>
 	</header>
+
+
+
+	
+
+
 	<div class="workarea">
 		<div class="container bx-content-section">
 			<div class="row">
 			<?$needSidebar = preg_match("~^".SITE_DIR."(catalog|personal\/cart|personal\/order\/make)/~", $curPage);?>
-				<div class="bx-content <?=($needSidebar ? "col" : "col-md-9 col-sm-8")?>">
+				<?/*<div class="bx-content <?=($needSidebar ? "col" : "col-md-9 col-sm-8")?>">*/?>
+				<div class="bx-content col-md-12 col-sm-12">
+                    <?if ($curPage != SITE_DIR."index.php"):?>
+                    <div class="row mb-4">
+                        <div class="col" id="navigation">
+                            <?$APPLICATION->IncludeComponent(
+                                "bitrix:breadcrumb",
+                                "universal",
+                                array(
+                                    "START_FROM" => "0",
+                                    "PATH" => "",
+                                    "SITE_ID" => "-"
+                                ),
+                                false,
+                                Array('HIDE_ICONS' => 'Y')
+                            );?>
+                        </div>
+                    </div>
+                    <?/*<h1 id="pagetitle"><?$APPLICATION->ShowTitle(false);?></h1>*/?>
+<?endif?>
